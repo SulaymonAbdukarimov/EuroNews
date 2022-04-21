@@ -1,0 +1,35 @@
+{
+  "news": [
+    {
+      "id": 1,
+      "name": "My first news",
+      "description": "l Lorem Ipsum has been the industry's standard dummy ever since the 1500s, when an unknown printer took a galley ",
+      "category": "Hot News"
+    },
+    {
+      "id": 2,
+      "name": "My second news",
+      "description": "l Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley ",
+      "category": "World News"
+    },
+    {
+      "id": 3,
+      "name": "My third news",
+      "description": "l Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley ",
+      "category": "Sport News"
+    },
+    {
+      "id": 4,
+      "name": "My fourth news",
+      "description": "l Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley ",
+      "category": "Hot News"
+    },
+    {
+      "id": 5,
+      "name": "My fives news",
+      "description": "l Lorem Ipsum has been the industry's standard dummy textever since the 1500s, when an unknown printer took a galley ",
+      "category": "World News"
+    }
+  ],
+  "filters": ["all", "hot", "sport", "world"]
+}
