@@ -1,5 +1,5 @@
-import news from "./reducers/news";
-import filter from "./reducers/filter";
+import news from "../components/NewsList/news_slice";
+import filter from "../components/NewsFilter/filter_slice";
 import { configureStore } from "@reduxjs/toolkit";
 import stringMiddleware from "../middleware/stringMiddleware";
 

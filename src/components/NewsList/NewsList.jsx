@@ -1,15 +1,15 @@
 import React from "react";
 
-import useHttp from "../hook/useHttp";
+import useHttp from "../../hook/useHttp";
 import { useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import { fetchNews, newsDelete } from "../redux/actions";
+import { fetchNews, newsDelete } from "../../redux/actions";
 
-import Loading from "./Loading";
-import Error from "./Error";
-import NewsListItem from "./NewsListItem";
-import "./style/news_list.css";
+import Loading from "../Loading";
+import Error from "../Error";
+import NewsListItem from "../NewsListItem";
+import "../style/news_list.css";
 import { createSelector } from "reselect";
 
 function NewsList() {

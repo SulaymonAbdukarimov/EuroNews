@@ -1,8 +1,8 @@
 import React from "react";
 import Navbar from "./Navbar";
-import NewsList from "./NewsList";
+import NewsList from "./NewsList/NewsList";
 import NewsAddForm from "./NewsAddForm";
-import NewsFilter from "./NewsFilter";
+import NewsFilter from "../components/NewsFilter/NewsFilter";
 
 function App() {
   return (

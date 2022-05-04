@@ -1,4 +1,14 @@
-import { createAction } from "@reduxjs/toolkit";
+import {
+  newsFetching,
+  newsFetched,
+  newsFetchingError,
+  removeNews,
+} from "../components/NewsList/news_slice";
+import {
+  filtersFetched,
+  filtersFetching,
+  filtersFetchingError,
+} from "../components/NewsFilter/filter_slice";
 
 export const fetchNews = (request) => (dispatch) => {
   dispatch(newsFetching());
@@ -20,12 +30,12 @@ export const fetchFilter = (request) => (dispatch) => {
     .catch(dispatch(filtersFetchingError()));
 };
 
-export const newsFetching = createAction("NEWS_FETCHING");
-export const newsFetched = createAction("NEWS_FETCHED");
-export const newsFetchingError = createAction("NEWS_FETCHING_ERROR");
-export const removeNews = createAction("REMOVE_NEWS");
-export const newsCreated = createAction("NEWS_CREATED");
-export const filtersFetching = createAction("FILTERS_FETCHING");
-export const filtersFetched = createAction("FILTERS_FETCHED");
-export const filtersFetchingError = createAction("FILTERS_FETCHING_ERROR");
-export const activeFilterChanged = createAction("ACTIVE_FILTER_CHANGED");
+// export const newsFetching = createAction("NEWS_FETCHING");
+// export const newsFetched = createAction("NEWS_FETCHED");
+// export const newsFetchingError = createAction("NEWS_FETCHING_ERROR");
+// export const removeNews = createAction("REMOVE_NEWS");
+// export const newsCreated = createAction("NEWS_CREATED");
+// export const filtersFetching = createAction("FILTERS_FETCHING");
+// export const filtersFetched = createAction("FILTERS_FETCHED");
+// export const filtersFetchingError = createAction("FILTERS_FETCHING_ERROR");
+// export const activeFilterChanged = createAction("ACTIVE_FILTER_CHANGED");
