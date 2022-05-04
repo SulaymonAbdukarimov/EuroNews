@@ -1,67 +1,73 @@
-// Vazifa.
-// "x" tugmasiga bosilganda ,yangiliklar UIdan o'chish kreak
-// Qiyin vazifa
-// O'chirilgan yangilik db.json dan ham o'chishi kerak .Method 'Delete'
-
 import React from "react";
+
 import useHttp from "../hook/useHttp";
-import { useEffect, useState } from "react";
+import { useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { newsFetching, newsFetched, newsFetchingError } from "../redux/actions";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { fetchNews, newsDelete } from "../redux/actions";
+
 import Loading from "./Loading";
 import Error from "./Error";
 import NewsListItem from "./NewsListItem";
+import "./style/news_list.css";
+import { createSelector } from "reselect";
 
 function NewsList() {
-  const { news, newsLoadingStatus } = useSelector((state) => state);
-  const [newsList, setNewsList] = useState([]);
+  const filteredNewsSelected = createSelector(
+    (state) => state.filter.activeFilter,
+    (state) => state.news.news,
+    (filter, news) => {
+      if (filter === "all") {
+        return news;
+      } else {
+        return news.filter((s) => s.category === filter);
+      }
+    }
+  );
 
+  const filteredNews = useSelector(filteredNewsSelected);
+  const filterLoadingStatus = useSelector((state) => state.filterLoadingStatus);
   const dispatch = useDispatch();
-
   const { request } = useHttp();
 
   useEffect(() => {
-    dispatch(newsFetching());
-    request("http://localhost:3001/news")
-      .then((data) => dispatch(newsFetched(data)))
-      .catch(() => dispatch(newsFetchingError()));
+    dispatch(fetchNews(request));
+    //eslint-disable-next-line
   }, []);
 
-  useEffect(() => {
-    if (newsList.length) {
-      return newsList.map(({ id, ...props }) => {
-        return (
-          <NewsListItem key={id} {...props} deleteNewsPost={deleteNewsPost} />
-        );
-      });
-    }
-  }, [newsList]);
+  const onDelete = useCallback((id) => {
+    dispatch(newsDelete(request, id));
+    //eslint-disable-next-line
+  }, []);
 
-  function deleteNewsPost(post) {
-    const newList = news.filter((item) => item.id !== post.id);
-    setNewsList(newList);
-  }
-
-  if (newsLoadingStatus === "loading") {
+  if (filterLoadingStatus === "loading") {
     return <Loading />;
-  } else if (newsLoadingStatus === "error") {
+  } else if (filterLoadingStatus === "error") {
     return <Error />;
   }
 
   const renderNewsList = (arr) => {
     if (arr.length === 0) {
-      return <h4 className="text-center mt-5">News doesn't exists</h4>;
-    }
-    return arr.map(({ id, ...props }) => {
       return (
-        <NewsListItem key={id} {...props} deleteNewsPost={deleteNewsPost} />
+        <CSSTransition timeout={500} classNames="item">
+          <h4>News doesn't found</h4>
+        </CSSTransition>
       );
-    });
+    }
+    return arr
+      .map(({ id, ...props }) => {
+        return (
+          <CSSTransition key={id} timeout={500} classNames="item">
+            <NewsListItem id={id} onDelete={() => onDelete(id)} {...props} />
+          </CSSTransition>
+        );
+      })
+      .reverse();
   };
 
-  let element = renderNewsList(news);
+  let element = renderNewsList(filteredNews);
 
-  return <ul>{element}</ul>;
+  return <TransitionGroup component="ul">{element}</TransitionGroup>;
 }
 
 export default NewsList;

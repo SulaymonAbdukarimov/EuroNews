@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 
 function useHttp() {
   const request = useCallback(
@@ -21,6 +21,7 @@ function useHttp() {
     },
     []
   );
+
   return { request };
 }
 

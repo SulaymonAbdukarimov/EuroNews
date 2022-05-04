@@ -1,8 +1,6 @@
-import React from "react";
-
-function NewsListItem({ name, id, description, category, deleteNewsPost }) {
+function NewsListItem({ ...props }) {
+  const { name, id, description, category, onDelete } = props;
   let elementClassName;
-
   switch (category) {
     case "Hot News":
       elementClassName = "bg-danger bg-gradient";
@@ -11,14 +9,15 @@ function NewsListItem({ name, id, description, category, deleteNewsPost }) {
       elementClassName = "bg-primary bg-gradient";
       break;
     case "World News":
-      elementClassName = "bg-secondary bg-gradient";
+      elementClassName = "bg-success bg-gradient";
       break;
     default:
-      elementClassName = "bg-success bg-gradient";
+      elementClassName = "bg-secondary bg-gradient";
   }
 
   return (
     <li
+      id={id}
       className={`card flex-row shadow-lg text-white my-2 ${elementClassName}`}
     >
       <div className="card-body">
@@ -33,7 +32,7 @@ function NewsListItem({ name, id, description, category, deleteNewsPost }) {
       />
       <span className="position-absolute top-0  end-90 translate-middle badge border rounded-pill bg-light">
         <button
-          onClick={() => deleteNewsPost(id)}
+          onClick={onDelete}
           className="btn-close"
           type="button"
           aria-label="Close"

@@ -1,35 +1,80 @@
 {
   "news": [
     {
-      "id": 1,
-      "name": "My first news",
-      "description": "l Lorem Ipsum has been the industry's standard dummy ever since the 1500s, when an unknown printer took a galley ",
+      "id": "16e8d980-bb09-43c8-a989-afecbf09c2a9",
+      "name": "Sulaymon Abdukarimov",
+      "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
       "category": "Hot News"
     },
     {
-      "id": 2,
-      "name": "My second news",
-      "description": "l Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley ",
+      "id": "f5d67e96-9148-450d-a373-ca6032576678",
+      "name": "Begzod",
+      "description": "jjj",
       "category": "World News"
     },
     {
-      "id": 3,
-      "name": "My third news",
-      "description": "l Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley ",
+      "id": "9483e9ef-a702-45d9-9aee-de1ee07b47a4",
+      "name": "Sulaymon Abdukarimov",
+      "description": "sdfkasdl Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley",
+      "category": ""
+    },
+    {
+      "id": "42d49db7-4bd8-469b-9f0b-cd1508b2c21b",
+      "name": "Begzod",
+      "description": "sdfkasdl Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley",
+      "category": ""
+    },
+    {
+      "id": "e0bbf24c-22e5-4acc-9499-0f481f3d17e3",
+      "name": "Sulaymon Abdukarimov",
+      "description": "sdfkasdl Lorem Ipsum has been the industry's standard dummy text",
+      "category": "Hot News"
+    },
+    {
+      "id": "c5ed0019-5927-497f-8e8f-7191a83a504d",
+      "name": "Sulaymon Abdukarimov",
+      "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+      "category": "World News"
+    },
+    {
+      "id": "6940dfbd-a3d6-4c4b-a912-a57757483b2e",
+      "name": "Sulaymon Abdukarimov",
+      "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
       "category": "Sport News"
     },
     {
-      "id": 4,
-      "name": "My fourth news",
-      "description": "l Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley ",
-      "category": "Hot News"
-    },
-    {
-      "id": 5,
-      "name": "My fives news",
-      "description": "l Lorem Ipsum has been the industry's standard dummy textever since the 1500s, when an unknown printer took a galley ",
-      "category": "World News"
+      "id": "81e962e1-a299-4868-99d5-1dd9d2569fa8",
+      "name": "asdfasdf",
+      "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+      "category": ""
     }
   ],
-  "filters": ["all", "hot", "sport", "world"]
+  "filters": [
+    {
+      "name": "all",
+      "label": "All",
+      "className": "btn-outline-dark"
+    },
+    {
+      "name": "Hot News",
+      "label": "Hot News",
+      "className": "btn-danger"
+    },
+    {
+      "name": "Sport News",
+      "label": "Sport News",
+      "className": "btn-primary"
+    },
+    {
+      "name": "World News",
+      "label": "World News",
+      "className": "btn-success"
+    },
+    {
+      "id": "eda8df1b-cf25-46be-ae36-14f1ef20c110",
+      "name": "Begzod",
+      "description": "sdfkasdl Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley",
+      "category": ""
+    }
+  ]
 }
