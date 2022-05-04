@@ -1,47 +1,34 @@
-import React from "react";
-
-import useHttp from "../../hook/useHttp";
+import { useHttp } from "../../hook/useHttp";
 import { useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
-import { fetchNews, newsDelete } from "../../redux/actions";
-
-import Loading from "../Loading";
+import Spinner from "../Spinner";
 import Error from "../Error";
 import NewsListItem from "../NewsListItem";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "../style/news_list.css";
-import { createSelector } from "reselect";
+import { newsDeleted, fetchNews, filteredNewsSelected } from "./news_slice";
 
-function NewsList() {
-  const filteredNewsSelected = createSelector(
-    (state) => state.filter.activeFilter,
-    (state) => state.news.news,
-    (filter, news) => {
-      if (filter === "all") {
-        return news;
-      } else {
-        return news.filter((s) => s.category === filter);
-      }
-    }
-  );
-
+export default function NewsList() {
   const filteredNews = useSelector(filteredNewsSelected);
   const filterLoadingStatus = useSelector((state) => state.filterLoadingStatus);
   const dispatch = useDispatch();
   const { request } = useHttp();
 
   useEffect(() => {
-    dispatch(fetchNews(request));
-    //eslint-disable-next-line
+    dispatch(fetchNews());
+    // eslint-disable-next-line
   }, []);
 
   const onDelete = useCallback((id) => {
-    dispatch(newsDelete(request, id));
-    //eslint-disable-next-line
+    request(`http://localhost:3001/news/${id}`, "DELETE")
+      .then((data) => console.log(data + "Deleted"))
+      .then(dispatch(newsDeleted(id)))
+      .catch(() => dispatch("NEWS_FETCHING_ERROR"));
+    // eslint-disable-next-line
   }, []);
 
   if (filterLoadingStatus === "loading") {
-    return <Loading />;
+    return <Spinner />;
   } else if (filterLoadingStatus === "error") {
     return <Error />;
   }
@@ -50,7 +37,7 @@ function NewsList() {
     if (arr.length === 0) {
       return (
         <CSSTransition timeout={500} classNames="item">
-          <h4>News doesn't found</h4>
+          <h5 className="text-center mt-5">New's doesn't found</h5>
         </CSSTransition>
       );
     }
@@ -58,16 +45,14 @@ function NewsList() {
       .map(({ id, ...props }) => {
         return (
           <CSSTransition key={id} timeout={500} classNames="item">
-            <NewsListItem id={id} onDelete={() => onDelete(id)} {...props} />
+            <NewsListItem onDelete={() => onDelete(id)} {...props} />
           </CSSTransition>
         );
       })
       .reverse();
   };
 
-  let element = renderNewsList(filteredNews);
+  const element = renderNewsList(filteredNews);
 
   return <TransitionGroup component="ul">{element}</TransitionGroup>;
 }
-
-export default NewsList;

@@ -1,8 +1,6 @@
-import React from "react";
-
-function Navbar() {
+export default function NavBar() {
   return (
-    <div className="d-flex flex-column flex-md-row align-items-center pb-3 p-3 mb-4 border-bottom">
+    <div className="d-flex flex-column flex-md-row align-items-center p-3 pb-3 mb-4 border-bottom">
       <a
         href="/"
         className="d-flex align-items-center text-dark text-decoration-none"
@@ -15,7 +13,7 @@ function Navbar() {
           viewBox="0 0 118 94"
           role="img"
         >
-          <title>Euro News</title>
+          <title>SBootstrap</title>
           <path
             fillRule="evenodd"
             clipRule="evenodd"
@@ -28,5 +26,3 @@ function Navbar() {
     </div>
   );
 }
-
-export default Navbar;

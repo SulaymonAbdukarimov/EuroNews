@@ -1,7 +1,7 @@
 import React from "react";
 import "./style/error.css";
 
-function Error() {
+function Error(props) {
   return (
     <section className="page_404">
       <div className="container">

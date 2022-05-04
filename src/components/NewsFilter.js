@@ -1,30 +1,33 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Loading from "../Loading.jsx";
+import { useHttp } from "../hook/useHttp";
 import { useEffect } from "react";
-
-import { activeFilterChanged } from "./filter_slice";
-import { fetchFilter } from "../../redux/actions";
-import Error from "../Error";
+import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames";
-import useHttp from "../../hook/useHttp";
+import Spinner from "./Spinner";
+import Error from "./Error";
+import {
+  filtersFetching,
+  filtersFetched,
+  filtersFetchingError,
+  activeFilterChanged,
+} from "../redux/actions";
 
-function NewsFilter() {
+function NewsFilter(props) {
   const { filters, filterLoadingStatus, activeFilter } = useSelector(
     (state) => state.filter
   );
-
   const dispatch = useDispatch();
-
   const { request } = useHttp();
 
   useEffect(() => {
-    dispatch(fetchFilter(request));
-    //eslint-disable-next-line
+    dispatch(filtersFetching());
+    request("http://localhost:3001/filters")
+      .then((data) => dispatch(filtersFetched(data)))
+      .catch((err) => dispatch(filtersFetchingError()));
+    // eslint-disable-next-line
   }, []);
 
   if (filterLoadingStatus === "loading") {
-    return <Loading />;
+    return <Spinner />;
   } else if (filterLoadingStatus === "error") {
     return <Error />;
   }
@@ -51,6 +54,7 @@ function NewsFilter() {
   };
 
   const elements = renderFilters(filters);
+
   return (
     <div className="card shadow-lg mt-4">
       <div className="card-body">
@@ -60,5 +64,4 @@ function NewsFilter() {
     </div>
   );
 }
-
 export default NewsFilter;

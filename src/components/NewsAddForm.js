@@ -1,29 +1,48 @@
-import React from "react";
 import { useState } from "react";
-import useHttp from "../hook/useHttp";
-import { useDispatch } from "react-redux";
+import { useHttp } from "../hook/useHttp";
+import { useDispatch, useSelector } from "react-redux";
 import { v4 } from "uuid";
 import { newsCreated } from "./NewsList/news_slice";
 
-function NewsAddForm() {
+function NewsAddForm(props) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
-
+  const { filters, filterLoadingStatus } = useSelector((state) => state.filter);
   const dispatch = useDispatch();
   const { request } = useHttp();
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
     const newNews = { id: v4(), name, description, category };
-
     request("http://localhost:3001/news", "POST", JSON.stringify(newNews))
+      .then((res) => console.log(res))
       .then(dispatch(newsCreated(newNews)))
       .catch((err) => console.log(err));
 
     setName("");
     setCategory("");
     setDescription("");
+  };
+
+  const renderFilters = (filters, status) => {
+    if (status === "loading") {
+      return <option>Loading options</option>;
+    } else if (status === "error") {
+      return <option>Error options</option>;
+    }
+
+    if (filters && filters.length > 0) {
+      return filters.map(({ name, label }) => {
+        // eslint-disable-next-line
+        if (name === "all") return;
+        return (
+          <option key={name} value={name}>
+            {label}
+          </option>
+        );
+      });
+    }
   };
 
   return (
@@ -47,20 +66,20 @@ function NewsAddForm() {
         <label htmlFor="text" className="form-label fs-4">
           Description
         </label>
-        <input
+        <textarea
           type="text"
           required
           name="text"
           className="form-control"
           id="text"
-          placeholder="What is your news about?"
+          placeholder="What is yor news about?"
           style={{ height: "120px" }}
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
       </div>
       <div className="mb-3">
-        <label htmlFor="category" className="form-label fs-4  text-white">
+        <label htmlFor="category" className="form-label">
           Choose category of news
         </label>
         <select
@@ -71,13 +90,11 @@ function NewsAddForm() {
           value={category}
           onChange={(e) => setCategory(e.target.value)}
         >
-          <option>Category News...</option>
-          <option value="Hot News">Hot News</option>
-          <option value="Sport News">Sport News</option>
-          <option value="World News">World News</option>
+          <option>Category of News...</option>
+          {renderFilters(filters, filterLoadingStatus)}
         </select>
       </div>
-      <button type="submit" className="btn shadow-lg btn-dark text-light w-100">
+      <button type="submit" className="btn btn-dark shadow-lg w-100 text-light">
         Create News
       </button>
     </form>

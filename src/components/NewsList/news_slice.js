@@ -1,40 +1,71 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createAsyncThunk,
+  createEntityAdapter,
+  createSelector,
+} from "@reduxjs/toolkit";
+import { useHttp } from "../../hook/useHttp";
 
-const initialState = {
-  news: [], //apidagi newslarni solish
-  newsLoadingStatus: "loaded",
-};
+const newsAdapter = createEntityAdapter();
+
+const initialState = newsAdapter.getInitialState({
+  newsLoadingStatus: "sam",
+});
+console.log(initialState);
+
+export const fetchNews = createAsyncThunk("news/fetchNews", async () => {
+  const { request } = useHttp();
+  return await request("http://localhost:3001/news");
+});
 
 const newsSlice = createSlice({
   name: "news",
   initialState,
   reducers: {
-    newsFetching: (state) => {
-      state.newsLoadingStatus = "loading";
-    },
-    newsFetched: (state, action) => {
-      state.newsLoadingStatus = "loaded";
-      state.news = action.payload;
-    },
-    newsFetchingError: (state) => {
-      state.newsLoadingStatus = "error";
-    },
     newsCreated: (state, action) => {
-      state.news.push(action.payload);
+      newsAdapter.addOne(state, action.payload);
     },
-    removeNews: (state, action) => {
-      state.news = state.news.filter((s) => s.id !== action.payload);
+    newsDeleted: (state, action) => {
+      newsAdapter.removeOne(state, action.payload);
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchNews.pending, (state) => {
+        state.newsLoadingStatus = "loading";
+      })
+      .addCase(fetchNews.fulfilled, (state, action) => {
+        state.newsLoadingStatus = "sam";
+        newsAdapter.setAll(state, action.payload);
+      })
+      .addCase(fetchNews.rejected, (state) => {
+        state.newsLoadingStatus = "error";
+      })
+      .addDefaultCase(() => {});
   },
 });
 
 const { actions, reducer } = newsSlice;
+
+const { selectAll } = newsAdapter.getSelectors((state) => state.news);
+export const filteredNewsSelected = createSelector(
+  (state) => state.filter.activeFilter,
+  selectAll,
+  (filter, news) => {
+    if (filter === "all") {
+      console.log(news);
+      return news;
+    } else {
+      return news.filter((s) => s.category === filter);
+    }
+  }
+);
+
+export default reducer;
 export const {
   newsFetching,
   newsFetched,
   newsFetchingError,
-  removeNews,
   newsCreated,
+  newsDeleted,
 } = actions;
-
-export default reducer;

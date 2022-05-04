@@ -1,13 +1,12 @@
-import React from "react";
-import Navbar from "./Navbar";
+import NavBar from "./NavbBar";
 import NewsList from "./NewsList/NewsList";
 import NewsAddForm from "./NewsAddForm";
-import NewsFilter from "../components/NewsFilter/NewsFilter";
+import NewsFilter from "./NewsFilter";
 
-function App() {
+function App(props) {
   return (
     <div className="app">
-      <Navbar />
+      <NavBar />
       <div className="content">
         <NewsList />
         <div className="content__page">
